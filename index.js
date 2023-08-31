@@ -19,7 +19,22 @@ AFRAME.registerComponent('videohandler', {
 });
 
 
+AFRAME.registerComponent('videohandler2', {
+    init: function () {
+        var marker = this.el;
+        this.vid = document.querySelector("#vid2");
 
+        marker.addEventListener('markerFound', function () {
+            this.toggle = true;
+            this.vid.play();
+        }.bind(this));
+
+        marker.addEventListener('markerLost', function () {
+            this.toggle = false;
+            this.vid.pause();
+        }.bind(this));
+    },
+});
 
 
 
