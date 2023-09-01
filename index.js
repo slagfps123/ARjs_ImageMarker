@@ -1,72 +1,90 @@
 let markerBvisible = false;
 let markerAvisible = false;
+let markerGokuvisible = false;
+let markerNewvisible = false;
 
-AFRAME.registerComponent('videohandler', {
+//AFRAME.registerComponent('videohandler', {
+//    init: function () {
+//        var marker = this.el;
+//        this.vid = document.querySelector("#vid");
+//
+//        marker.addEventListener('markerFound', function () {
+//            this.toggle = true;
+//            this.vid.play();
+//        }.bind(this));
+//
+//        marker.addEventListener('markerLost', function () {
+//            this.toggle = false;
+//            this.vid.pause();
+//            vid.currentTime = 0;
+//        }.bind(this));
+ //   },
+//});
+
+
+
+AFRAME.registerComponent("gokuhandler", {
     init: function () {
-        var marker = this.el;
-        this.vid = document.querySelector("#vid");
+        const markerVideo1 = this.el;
+        const objectGoku = document.getElementById("object-goku");
+        const objectNewMarker = document.getElementById("object-newmarker");
+        const gokuVid = document.getElementById("gokuvid");
+        this.cam = document.querySelector("[camera]")
+        this.goku1 = document.querySelector("#object-goku")
 
-        marker.addEventListener('markerFound', function () {
-            this.toggle = true;
-            this.vid.play();
-        }.bind(this));
-
-        marker.addEventListener('markerLost', function () {
-            this.toggle = false;
-            this.vid.pause();
-        }.bind(this));
+        // When the marker is found, the `markerFound` event is triggered
+        markerVideo1.addEventListener("markerFound", (event) => {
+            console.log("Marker found: Goku");
+            // Perform actions when the marker is found
+            markerGokuvisible = true;
+            gokuVid.play();
+        });
+        // When the marker is lost, the `markerLost` event is triggered
+        markerVideo1.addEventListener("markerLost", (event) => {
+            console.log("Marker lost: Goku");
+            markerGokuvisible = false;
+            //                this.vid.pause();
+            //                vid.currentTime = 0;
+            gokuVid.pause();
+            gokuVid.currentTime=0;
+            
+        });
+      
     },
+    tick: function () {
+        let camPos = this.cam.object3D.position
+        let goku1pos = this.goku1.object3D.position
+        let distance = camPos.distanceTo(goku1pos)
+        if (distance < 5) {
+        // camera closer than 5m, do something
+            document.getElementById("distancetext").innerHTML=distance;
+            console.log("Distance from Camera to Marker is " + distance);
+        }}
 });
 
-
-
-
-
-// let markerCvisible = false;
-
-// AFRAME.registerComponent("marker-c", {
-//    init: function () {
-//        const markerC = this.el;
-//        const objectC = document.getElementById("object-c");
-//        objectC.setAttribute("muted", "true");
-//        objectC.setAttribute("autoplay", "false");
-//        markerC.addEventListener("markerFound", (event) => {
-//            console.log("Marker found: C");
-//           markerCvisible = true;
+AFRAME.registerComponent("newmarkerhandler", {
+    init: function () {
+        const markerVideo2 = this.el;
+        const objectGoku = document.getElementById("object-goku");
+        const objectNewMarker = document.getElementById("object-newmarker");
+        const newVid = document.getElementById("newvid");
+        // When the marker is found, the `markerFound` event is triggered
+        markerVideo2.addEventListener("markerFound", (event) => {
+            console.log("Marker found: New Mark");
+            // Perform actions when the marker is found
+            markerNewvisible = true;
+            newVid.play();
+        });
+        // When the marker is lost, the `markerLost` event is triggered
+        markerVideo2.addEventListener("markerLost", (event) => {
+            console.log("Marker lost: New Mark");
+            markerNewvisible = false;
+            newVid.pause();
+            newVid.currentTime=0;
             
-
-//           if (markerCvisible == true) {
-//                objectC.play();
-//                objectC.currentTime = 0;
-//                objectC.setAttribute("muted", "true");
-//            }
-//            else {
-//                objectC.pause();
-//            }
-
-            //if (markerCvisible == true) {
-            //    objectC.setAttribute("muted", "false");
-            //    objectC.setAttribute("autoplay", "true");
-            //    }
-            //    else {
-            //    objectC.setAttribute("muted", "true");
-            //    objectC.setAttribute("autoplay", "false");
-            //    }
-            
-            
-           // if (markerCvisible == true) {
-           //    objectC.autoplay == true;
-           //    objectC.muted == false;
-           // }
-           // else {
-           //     objectC.muted === true;
-           //     objectC.autoplay == false;
-           // }
-//});
-
-//    }
-
-//});
+        });
+    }
+});
 
 AFRAME.registerComponent("marker-b", {
     init: function () {
