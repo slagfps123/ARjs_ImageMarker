@@ -38,6 +38,11 @@ AFRAME.registerComponent("gokuhandler", {
             // Perform actions when the marker is found
             markerGokuvisible = true;
             gokuVid.play();
+            let camPos = this.cam.object3D.position
+            let goku1pos = this.goku1.object3D.position
+            let distance = camPos.distanceTo(goku1pos)
+            document.getElementById("distancetext").innerHTML=distance;
+            console.log("Distance from Camera to Marker is " + distance);
         });
         // When the marker is lost, the `markerLost` event is triggered
         markerVideo1.addEventListener("markerLost", (event) => {
@@ -51,15 +56,18 @@ AFRAME.registerComponent("gokuhandler", {
         });
       
     },
-    tick: function () {
-        let camPos = this.cam.object3D.position
-        let goku1pos = this.goku1.object3D.position
-        let distance = camPos.distanceTo(goku1pos)
-        if (distance < 5) {
+    //tick: function () {
+        //let camPos = this.cam.object3D.position
+        //let goku1pos = this.goku1.object3D.position
+        //let distance = camPos.distanceTo(goku1pos)
+        //document.getElementById("distancetext").innerHTML=distance;
+        //console.log("Distance from Camera to Marker is " + distance);
+        // if (distance < 5) {
         // camera closer than 5m, do something
-            document.getElementById("distancetext").innerHTML=distance;
-            console.log("Distance from Camera to Marker is " + distance);
-        }}
+           // document.getElementById("distancetext").innerHTML=distance;
+            //console.log("Distance from Camera to Marker is " + distance);
+        // }}
+    //}
 });
 
 AFRAME.registerComponent("newmarkerhandler", {
